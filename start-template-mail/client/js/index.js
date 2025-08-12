@@ -1,6 +1,12 @@
 "use strict"
 //==========================================
 
+async function submitForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    
+}
+
 function validateForm(formData) {
     const { name, email, phone, message } = formData;
 
