@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://i.ibb.co/GP3dyzw/IMG-6199.jpg">
+    <title>Frontend-кейс</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+    <div class="wrapper">
+
+    <form id="form" onsubmit="submitForm(event)">
+        <div class="form__left-decoration"></div>
+        <div class="form__right-decoration"></div>
+        <div class="form__circle"></div>
+        <div class="form__wrapper">
+            <h3>Написати нам</h3>
+            <div class="form__field-inner">
+                <input type="text" name="name" placeholder="ПІП">
+                <span class="form__error" data-for="name"></span>
+            </div>
+            <div class="form__field-inner">
+                <input type="tel" name="phone" placeholder="Телефон">
+                <span class="form__error" data-for="phone"></span>
+            </div>
+            <div class="form__field-inner">
+                <input type="text" name="email" placeholder="Email">
+                <span class="form__error" data-for="email"></span>
+            </div>
+            <div class="form__field-inner">
+                <textarea name="message" placeholder="Повідомлення..." rows="3"></textarea>
+                <span class="form__error" data-for="message"></span>
+            </div>
+            <button class="form__btn" type="submit">Відправити</button>
+            <div class="form__send-result"></div>
+        </div>
+    </form>
+
+    </div>
+    <footer style="font-family: Arial, Helvetica, sans-serif; text-align: center; padding: 10px 0;">
+        Підключайся до нас в телеграмм <a target="_blank" href="https://t.me/frontend_case">@frontend_case</a>.
+        
+    </footer>
+    <script src="./js/index.js"></script>
+</body>
+</html>
