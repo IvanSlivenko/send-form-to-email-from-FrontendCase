@@ -3,8 +3,28 @@
 
 async function submitForm(event) {
     event.preventDefault();
-    const form = event.target;
+
     
+    const form = event.target;
+    const formBtn = document.querySelector('.form__btn');
+    const formSendResult = document.querySelector('.form__send-result');
+    formSendResult.textContent='';
+
+    const formData = new FormData(form);
+    const formDataObject = {};
+
+    formData.forEach((value, key) => {
+        formDataObject[key] = value.trim().replace(/\s+/g,'');
+
+    })
+    
+    console.log(formDataObject)
+
+    const validationErrors = validateForm(formDataObject);
+
+    
+
+    console.log(`Було натиснути на кнопку ${formBtn.textContent}`)
 }
 
 function validateForm(formData) {

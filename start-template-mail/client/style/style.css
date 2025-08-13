@@ -122,6 +122,13 @@ body {
     border-radius: 20px;
     font-family: 'Roboto', sans-serif;
 }
+.form__field-inner input:focus, .form__field-inner textarea:focus {
+    background: rgb(88, 50, 131);
+    color: white;
+    border: none;
+    outline: none;
+}
+
 
 .form__btn {
     margin-top: 20px;
