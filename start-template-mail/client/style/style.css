@@ -145,7 +145,8 @@ body {
 }
 
 .form__error {
-    color: red;
+    /* color: red; */
+    color: rgb(62, 3, 102);
     display: block;
     font-size: 12px;
 }
