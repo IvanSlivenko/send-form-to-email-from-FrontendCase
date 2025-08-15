@@ -4,49 +4,90 @@
 async function submitForm(event) {
     event.preventDefault();
 
-    
+
     const form = event.target;
     const formBtn = document.querySelector('.form__btn');
     const formSendResult = document.querySelector('.form__send-result');
-    formSendResult.textContent='';
+    formSendResult.textContent = '';
 
     const formData = new FormData(form);
     const formDataObject = {};
 
     formData.forEach((value, key) => {
-        formDataObject[key] = value.trim().replace(/\s+/g,'');
+        formDataObject[key] = value.trim().replace(/\s+/g, '');
 
     })
-    
+
     console.log(formDataObject)
 
     const validationErrors = validateForm(formDataObject);
 
     displayErrors(validationErrors);
-        if(validationErrors.length > 0) return;
 
-    
+    if (validationErrors.length > 0) return;
 
-    console.log(`Було натиснути на кнопку ${formBtn.textContent}`)
+    sendFormData(form, formBtn, formSendResult, formDataObject);
+
+    // console.log(`Було натиснути на кнопку ${formBtn.textContent}`)
 }
 
-function displayErrors(errors){
+async function sendFormData(form, formBtn, formSendResult, formDataObject) {
+    try {
+        formBtn.textContent="Loading...";
+        formBtn.disabled =  true;
+
+        const response = await fetch('http://localhost:5000/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(formDataObject),
+        });
+
+        if(response.ok){
+            formSendResult.textContent="Дякуємо вам за лист, ми вам відповімо згодом";
+            form.reset();
+        }else if(response.status === 422){
+            const errors = await response.json();
+            console.log(errors);
+            throw new Error('Помилка валідації відомостей');
+        }else {
+            throw new Error(response.statusText);
+            
+        }
+
+    } catch (error) {
+        console.error(error.message);
+        formSendResult.textContent = "Лист не відпрвлено, спробуйте пізніше";
+        formSendResult.style.color = "rgb(62, 3, 102)";
+    } finally {
+        formBtn.textContent = "Відправити";
+        formBtn.disabled = false;
+        console.error('finally');
+    }
+
+}
+
+function displayErrors(errors) {
     const errorElement = document.querySelectorAll('.form__error');
-    errorElement.forEach((errorElement) => errorElement.textContent='')
+    errorElement.forEach((errorElement) => errorElement.textContent = '')
 
-    if(errors.length < 1) return;
+    if (errors.length < 1) return;
 
-    errors.forEach((error)=>{
-        const {field, message} = error;
+    errors.forEach((error) => {
+        const { field, message } = error;
         const errorElement = document.querySelector(`[data-for="${field}"]`);
         errorElement.textContent = message;
     })
 }
 
+
+
 function validateForm(formData) {
     const { name, email, phone, message } = formData;
 
-    const phoneRegex = /^\+[0-9]{5,15}$/;
+    // const phoneRegex = /^\+[0-9]{5,15}$/;// +380674708721
+    const phoneRegex = /^0\d{9}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const errors = [];
@@ -60,7 +101,7 @@ function validateForm(formData) {
     if (!phone) {
         errors.push({ field: 'phone', message: 'Будь-ласка, введіть номер телефону.' });
     } else if (!phoneRegex.test(phone)) {
-        errors.push({ field: 'phone', message: 'Будь-ласка, введіть корректний номер телефону. Наприклад: 067 470 87 21' });
+        errors.push({ field: 'phone', message: 'Будь-ласка, введіть корректний номер телефону. Наприклад: 0674708721' });
     }
 
     if (!email) {
@@ -74,6 +115,6 @@ function validateForm(formData) {
     } else if (message.length < 20 || message.length > 400) {
         errors.push({ field: 'message', message: 'В повідомленні має бути мін. 20 і не більше 400 символів.' });
     }
-    
+
     return errors;
 }

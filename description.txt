@@ -1,6 +1,35 @@
 https://youtu.be/EG572sMG5V0
 
 
+32 : 05 : 00
+information about server
+
+terminal to folder nodejs
+
+node -v
+
+yarn -v
+
+yarn init -y
+
+yarn add cors dotenv express express-validator nodemailer
+
+yarn add nodemon -D
+
+
+PORT = 5000
+EMAIL = ivan8822@ukr.net
+PASS = GajT8lwPvqVAnDsC від IMAP в Укр нет
+
+html: `<p><strong>Email:</strong>${email}</p>
+            <p><strong>Phone:</strong>${phone}</p>
+            <p><strong>Повідомлення:</strong>${message}</p>
+            <pre>${message}</pre>
+            `,
+
+
+
+
 ---------------------------------------------
 00 : 20 : 38
 
